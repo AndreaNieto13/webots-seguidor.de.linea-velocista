@@ -1,0 +1,49 @@
+
+def ObstacleAvoidanceModule():
+    global oam_active, oam_side, oam_reset
+    max_ds_value = 0
+    Activation = [0, 0]
+
+    if oam_reset:
+        oam_active = FALSE
+        oam_side = NO_SIDE
+
+    oam_reset = 0
+
+    for i in range(PS_RIGHT_00, PS_RIGHT_45 + 1):
+        if max_ds_value < ps_value[i]:
+            max_ds_value = ps_value[i]
+        Activation[RIGHT] += ps_value[i]
+    
+    for i in range(PS_LEFT_45, PS_LEFT_00 + 1):
+        if max_ds_value < ps_value[i]:
+            max_ds_value = ps_value[i]
+        Activation[LEFT] += ps_value[i]
+
+    if max_ds_value > OAM_OBST_THRESHOLD:
+        oam_active = TRUE
+
+    if oam_active and oam_side == NO_SIDE:
+        oam_side = RIGHT if Activation[RIGHT] > Activation[LEFT] else LEFT
+
+    oam_speed[LEFT] = OAM_FORWARD_SPEED
+    oam_speed[RIGHT] = OAM_FORWARD_SPEED
+
+    if oam_active:
+        DeltaS = 0
+        if oam_side == LEFT:
+            DeltaS -= int(OAM_K_PS_90 * ps_value[PS_LEFT_90])
+            DeltaS -= int(OAM_K_PS_45 * ps_value[PS_LEFT_45])
+            DeltaS -= int(OAM_K_PS_00 * ps_value[PS_LEFT_00])
+        else:
+            DeltaS += int(OAM_K_PS_90 * ps_value[PS_RIGHT_90])
+            DeltaS += int(OAM_K_PS_45 * ps_value[PS_RIGHT_45])
+            DeltaS += int(OAM_K_PS_00 * ps_value[PS_RIGHT_00])
+
+        if DeltaS > OAM_K_MAX_DELTAS:
+            DeltaS = OAM_K_MAX_DELTAS
+        if DeltaS < -OAM_K_MAX_DELTAS:
+            DeltaS = -OAM_K_MAX_DELTAS
+
+        oam_speed[LEFT] -= DeltaS
+        oam_speed[RIGHT] += DeltaS

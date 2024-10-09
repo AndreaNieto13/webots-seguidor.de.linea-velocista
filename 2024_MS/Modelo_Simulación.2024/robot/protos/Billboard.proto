@@ -1,0 +1,21 @@
+#VRML_SIM R2023b utf8
+# Describe the functionality of your PROTO here.
+
+DEF TV_TEXT Billboard {
+  axisOfRotation 0 1 0
+  children [
+    Shape {
+      appearance Appearance {
+        texture Texture {
+          image Image {
+            url "tv_screen_texture.png"  # Cambia a tu textura deseada
+          }
+        }
+      }
+      geometry Text {
+        string ["0"]  # Valor inicial
+        fontSize 0.1
+      }
+    }
+  ]
+}

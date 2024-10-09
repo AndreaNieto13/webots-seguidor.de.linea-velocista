@@ -1,0 +1,71 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "../protos/E-puck.proto"
+EXTERNPROTO "../protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/robots/gctronic/e-puck/protos/E-puckGroundSensors.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/television/protos/Television.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation 0.15230135828665287 -0.006381801862808378 -0.9883134972613824 3.2243523244314503
+  position 1.9429177673396594 -0.01542729579815004 1.0718525574043385
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorTileSize 0.9 1
+  floorAppearance PBRAppearance {
+    baseColorMap ImageTexture {
+      url [
+        "../imagenes/oval1.png"
+      ]
+      repeatS FALSE
+      repeatT FALSE
+    }
+    roughness 0.2
+    metalness 0
+    emissiveIntensity 0
+  }
+}
+E-puck {
+  hidden position_0_0 617.1117492854596
+  hidden position_0_1 704.2666950006208
+  hidden translation_1 0 0.02599999999999957 0.02
+  hidden rotation_1 0 1 0 3.42456472710166
+  hidden translation_2 0 -0.025999999999999784 0.02
+  hidden rotation_2 0 1 0 1.6076416648407679
+  translation -0.008691727760512096 0.31683406041816226 -6.395367242333604e-05
+  rotation -0.0004854055013507185 3.53215299582767e-05 0.9999998815669373 2.9963164734051513
+  controller "Velo_controller"
+  groundSensorsSlot [
+    E-puckGroundSensors {
+    }
+  ]
+}
+Robot {
+  translation -0.08 0.04 0
+  children [
+    Receiver {
+      channel 1
+    }
+    DEF display Display {
+      children [
+        Television {
+          translation -0.54 0 0.65
+          displayWidth 640
+          displayHeight 480
+          controller "<generic>"
+        }
+      ]
+      name "ds_tv"
+      width 640
+      height 480
+    }
+  ]
+  controller "controlador_tv"
+}
